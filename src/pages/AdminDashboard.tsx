@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   LayoutDashboard, BarChart3, BookOpen, Users, Settings,
   Building2, GraduationCap, FileText, Plus, Filter, Download,
-  Edit, Trash2, ChevronLeft, ChevronRight, HelpCircle, LogOut, LifeBuoy,
+  HelpCircle, LogOut, LifeBuoy,
   Link as LinkIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,18 @@ import { departments, courses, resources } from "@/data/mockData";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose,
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Label } from "@/components/ui/label";
 
 const sidebarItems = [
   { label: "Dashboard", icon: LayoutDashboard },
@@ -26,11 +38,11 @@ const statCards = [
   { label: "Total Resources", value: resources.length.toLocaleString(), icon: FileText, color: "bg-accent" },
 ];
 
-const tableResources = [
-  { course: "CS101", courseName: "Introduction to Programming", title: "Algorithmic Foundations PDF", source: "ocw.mit.edu" },
-  { course: "ECON402", courseName: "Macroeconomics Theory", title: "Global Market Trends 2023", source: "worldbank.org" },
-  { course: "BIO220", courseName: "Cellular Biology", title: "Mitosis Interactive Simulation", source: "nature.com" },
-  { course: "HIST112", courseName: "Renaissance Europe", title: "The Medici Archive Project", source: "medici.org" },
+const initialTableResources = [
+  { id: "1", course: "CS101", courseName: "Introduction to Programming", title: "Algorithmic Foundations PDF", source: "ocw.mit.edu" },
+  { id: "2", course: "ECON402", courseName: "Macroeconomics Theory", title: "Global Market Trends 2023", source: "worldbank.org" },
+  { id: "3", course: "BIO220", courseName: "Cellular Biology", title: "Mitosis Interactive Simulation", source: "nature.com" },
+  { id: "4", course: "HIST112", courseName: "Renaissance Europe", title: "The Medici Archive Project", source: "medici.org" },
 ];
 
 const barData = [
@@ -41,8 +53,71 @@ const barData = [
   { name: "Law", height: "65%" },
 ];
 
+interface ResourceForm {
+  course: string;
+  courseName: string;
+  title: string;
+  source: string;
+}
+
+const emptyForm: ResourceForm = { course: "", courseName: "", title: "", source: "" };
+
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const [tableResources, setTableResources] = useState(initialTableResources);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [form, setForm] = useState<ResourceForm>(emptyForm);
+  const [errors, setErrors] = useState<Partial<ResourceForm>>({});
+  const { toast } = useToast();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const validate = (): boolean => {
+    const e: Partial<ResourceForm> = {};
+    if (!form.course.trim()) e.course = "Required";
+    if (!form.title.trim()) e.title = "Required";
+    if (!form.source.trim()) e.source = "Required";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const openAdd = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setErrors({});
+    setDialogOpen(true);
+  };
+
+  const openEdit = (r: typeof initialTableResources[0]) => {
+    setEditingId(r.id);
+    setForm({ course: r.course, courseName: r.courseName, title: r.title, source: r.source });
+    setErrors({});
+    setDialogOpen(true);
+  };
+
+  const handleSave = () => {
+    if (!validate()) return;
+    if (editingId) {
+      setTableResources((prev) => prev.map((r) => r.id === editingId ? { ...r, ...form } : r));
+      toast({ title: "Resource updated", description: `"${form.title}" has been updated successfully.` });
+    } else {
+      const newId = String(Date.now());
+      setTableResources((prev) => [...prev, { id: newId, ...form }]);
+      toast({ title: "Resource added", description: `"${form.title}" has been added successfully.` });
+    }
+    setDialogOpen(false);
+  };
+
+  const handleDelete = (id: string, title: string) => {
+    setTableResources((prev) => prev.filter((r) => r.id !== id));
+    toast({ title: "Resource deleted", description: `"${title}" has been removed.`, variant: "destructive" });
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -76,7 +151,7 @@ const AdminDashboard = () => {
             <button className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
               <LifeBuoy className="h-4 w-4" /> Support
             </button>
-            <button className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
+            <button onClick={handleLogout} className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
               <LogOut className="h-4 w-4" /> Logout
             </button>
           </div>
@@ -96,7 +171,7 @@ const AdminDashboard = () => {
               <Input placeholder="Find a resource..." className="pl-9 w-56 bg-secondary" />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">🔍</span>
             </div>
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={openAdd}>
               <Plus className="h-4 w-4" /> Add New Resource
             </Button>
           </div>
@@ -137,8 +212,8 @@ const AdminDashboard = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {tableResources.map((r, i) => (
-                  <TableRow key={i}>
+                {tableResources.map((r) => (
+                  <TableRow key={r.id}>
                     <TableCell>
                       <span className="text-primary font-semibold">{r.course}</span>
                       <br />
@@ -151,8 +226,26 @@ const AdminDashboard = () => {
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-3">
-                      <button className="text-sm text-muted-foreground hover:text-foreground">Edit</button>
-                      <button className="text-sm text-destructive hover:text-destructive/80">Delete</button>
+                      <button onClick={() => openEdit(r)} className="text-sm text-muted-foreground hover:text-foreground">Edit</button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button className="text-sm text-destructive hover:text-destructive/80">Delete</button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Resource</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete "{r.title}"? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDelete(r.id, r.title)}>
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -160,7 +253,7 @@ const AdminDashboard = () => {
             </Table>
             <div className="flex items-center justify-between p-4 border-t border-border">
               <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                Showing {tableResources.length} of 12,405 Resources
+                Showing {tableResources.length} of {tableResources.length} Resources
               </p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">Previous</Button>
@@ -171,7 +264,6 @@ const AdminDashboard = () => {
 
           {/* Bottom section */}
           <div className="grid grid-cols-5 gap-6">
-            {/* Chart */}
             <div className="col-span-3 bg-card border border-border rounded-xl p-6">
               <h3 className="font-display font-bold text-foreground mb-6">Department Distribution</h3>
               <div className="flex items-end justify-around h-48 gap-4">
@@ -185,8 +277,6 @@ const AdminDashboard = () => {
                 ))}
               </div>
             </div>
-
-            {/* Tip */}
             <div className="col-span-2 bg-tip rounded-xl p-6 flex flex-col text-tip-foreground">
               <HelpCircle className="h-10 w-10 mb-4 opacity-80" />
               <h3 className="font-display font-bold text-xl mb-2">Curatory Tip</h3>
@@ -212,6 +302,42 @@ const AdminDashboard = () => {
           <p className="text-xs text-muted-foreground">© 2024 University Digital Curatory. All Rights Reserved.</p>
         </footer>
       </div>
+
+      {/* Add/Edit Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{editingId ? "Edit Resource" : "Add New Resource"}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div>
+              <Label>Course Code *</Label>
+              <Input value={form.course} onChange={(e) => setForm({ ...form, course: e.target.value })} placeholder="e.g. CS201" className="mt-1" />
+              {errors.course && <p className="text-xs text-destructive mt-1">{errors.course}</p>}
+            </div>
+            <div>
+              <Label>Course Name</Label>
+              <Input value={form.courseName} onChange={(e) => setForm({ ...form, courseName: e.target.value })} placeholder="e.g. Data Structures" className="mt-1" />
+            </div>
+            <div>
+              <Label>Resource Title *</Label>
+              <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. MIT Lecture Series" className="mt-1" />
+              {errors.title && <p className="text-xs text-destructive mt-1">{errors.title}</p>}
+            </div>
+            <div>
+              <Label>Source Website *</Label>
+              <Input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="e.g. ocw.mit.edu" className="mt-1" />
+              {errors.source && <p className="text-xs text-destructive mt-1">{errors.source}</p>}
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSave}>{editingId ? "Save Changes" : "Add Resource"}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
