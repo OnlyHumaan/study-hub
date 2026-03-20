@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import EmptyState from "@/components/EmptyState";
 
 const typeFilters = ["All Resources", "Video Lectures", "Interactive Tutorials", "Text Documentation", "Certification Courses"];
 
@@ -66,49 +67,53 @@ const CourseResourcesPage = () => {
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-        {filtered.map((resource, idx) => {
-          const Icon = typeIcons[resource.type] || BookOpen;
-          return (
-            <div
-              key={resource.id}
-              className={`rounded-xl overflow-hidden flex flex-col ${
-                idx === 0 && resource.isPrimary
-                  ? "sm:col-span-2 sm:flex-row bg-card border border-border"
-                  : "bg-card border border-border"
-              }`}
-            >
-              {idx === 0 && resource.isPrimary && (
-                <div className="sm:w-72 h-48 sm:h-auto bg-gradient-to-br from-primary/80 to-primary relative shrink-0">
-                  <Badge className="absolute top-4 left-4 bg-card/90 text-foreground text-[10px]">Primary Source</Badge>
-                </div>
-              )}
-              <div className="p-6 flex flex-col flex-1">
-                {!(idx === 0 && resource.isPrimary) && (
-                  <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
-                    <Icon className="h-5 w-5 text-accent-foreground" />
+      {filtered.length === 0 ? (
+        <EmptyState message="No resources available for this course" />
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+          {filtered.map((resource, idx) => {
+            const Icon = typeIcons[resource.type] || BookOpen;
+            return (
+              <div
+                key={resource.id}
+                className={`rounded-xl overflow-hidden flex flex-col ${
+                  idx === 0 && resource.isPrimary
+                    ? "sm:col-span-2 sm:flex-row bg-card border border-border"
+                    : "bg-card border border-border"
+                }`}
+              >
+                {idx === 0 && resource.isPrimary && (
+                  <div className="sm:w-72 h-48 sm:h-auto bg-gradient-to-br from-primary/80 to-primary relative shrink-0">
+                    <Badge className="absolute top-4 left-4 bg-card/90 text-foreground text-[10px]">Primary Source</Badge>
                   </div>
                 )}
-                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">{resource.sourceWebsite}</p>
-                <h3 className="font-semibold text-foreground text-lg mb-2">{resource.title}</h3>
-                <p className="text-sm text-muted-foreground flex-1">{resource.description}</p>
-                {idx === 0 && resource.isPrimary && (
-                  <p className="text-xs text-muted-foreground mt-3">Updated 2024</p>
-                )}
-                <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-4">
-                  <Button
-                    variant={idx === 0 && resource.isPrimary ? "default" : "outline"}
-                    className="w-full justify-between"
-                  >
-                    Visit Resource
-                    {idx === 0 && resource.isPrimary ? <ExternalLink className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
-                  </Button>
-                </a>
+                <div className="p-6 flex flex-col flex-1">
+                  {!(idx === 0 && resource.isPrimary) && (
+                    <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
+                      <Icon className="h-5 w-5 text-accent-foreground" />
+                    </div>
+                  )}
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">{resource.sourceWebsite}</p>
+                  <h3 className="font-semibold text-foreground text-lg mb-2">{resource.title}</h3>
+                  <p className="text-sm text-muted-foreground flex-1">{resource.description}</p>
+                  {idx === 0 && resource.isPrimary && (
+                    <p className="text-xs text-muted-foreground mt-3">Updated 2024</p>
+                  )}
+                  <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-4">
+                    <Button
+                      variant={idx === 0 && resource.isPrimary ? "default" : "outline"}
+                      className="w-full justify-between"
+                    >
+                      Visit Resource
+                      {idx === 0 && resource.isPrimary ? <ExternalLink className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
+                    </Button>
+                  </a>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       <div className="text-center mt-12">
         <p className="text-xs tracking-widest text-muted-foreground uppercase mb-3">

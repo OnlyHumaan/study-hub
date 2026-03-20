@@ -1,14 +1,26 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Search, Shield, FileText, UserCheck, Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { departments } from "@/data/mockData";
+import EmptyState from "@/components/EmptyState";
 
 const iconMap: Record<string, React.ElementType> = {
   Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, Users,
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <>
       {/* Hero */}
@@ -23,16 +35,18 @@ const HomePage = () => {
           <p className="mt-4 text-muted-foreground max-w-lg mx-auto">
             Discover curated websites, tutorials, and learning platforms recommended for your academic success.
           </p>
-          <div className="mt-8 flex items-center max-w-xl mx-auto bg-card rounded-lg shadow-sm border border-border overflow-hidden">
+          <form onSubmit={handleSearch} className="mt-8 flex items-center max-w-xl mx-auto bg-card rounded-lg shadow-sm border border-border overflow-hidden">
             <div className="flex items-center flex-1 px-4">
               <Search className="h-5 w-5 text-muted-foreground mr-3 shrink-0" />
               <Input
-                placeholder="Search by course name, code, or topic..."
+                placeholder="Search by course name, code, or department..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="border-0 shadow-none focus-visible:ring-0 px-0"
               />
             </div>
-            <Button className="rounded-none rounded-r-lg h-12 px-6">Search</Button>
-          </div>
+            <Button type="submit" className="rounded-none rounded-r-lg h-12 px-6">Search</Button>
+          </form>
         </div>
       </section>
 
@@ -51,29 +65,33 @@ const HomePage = () => {
           Navigate through our structured academic archives to find resources specific to your faculty and field of study.
         </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {departments.map((dept) => {
-            const Icon = iconMap[dept.icon] || Monitor;
-            const isHighlighted = dept.id === "cs";
-            return (
-              <Link
-                key={dept.id}
-                to={`/departments/${dept.id}`}
-                className={`group rounded-xl p-6 transition-all hover:shadow-md ${
-                  isHighlighted
-                    ? "bg-primary text-primary-foreground shadow-lg row-span-1"
-                    : "bg-card border border-border"
-                }`}
-              >
-                <Icon className={`h-7 w-7 mb-6 ${isHighlighted ? "text-primary-foreground" : "text-primary"}`} />
-                <p className={`text-[10px] uppercase tracking-widest font-medium mb-1 ${isHighlighted ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
-                  {dept.faculty}
-                </p>
-                <h3 className={`font-semibold text-sm ${isHighlighted ? "" : "text-foreground"}`}>{dept.name}</h3>
-              </Link>
-            );
-          })}
-        </div>
+        {departments.length === 0 ? (
+          <EmptyState message="No departments available" />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {departments.map((dept) => {
+              const Icon = iconMap[dept.icon] || Monitor;
+              const isHighlighted = dept.id === "cs";
+              return (
+                <Link
+                  key={dept.id}
+                  to={`/departments/${dept.id}`}
+                  className={`group rounded-xl p-6 transition-all hover:shadow-md ${
+                    isHighlighted
+                      ? "bg-primary text-primary-foreground shadow-lg row-span-1"
+                      : "bg-card border border-border"
+                  }`}
+                >
+                  <Icon className={`h-7 w-7 mb-6 ${isHighlighted ? "text-primary-foreground" : "text-primary"}`} />
+                  <p className={`text-[10px] uppercase tracking-widest font-medium mb-1 ${isHighlighted ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                    {dept.faculty}
+                  </p>
+                  <h3 className={`font-semibold text-sm ${isHighlighted ? "" : "text-foreground"}`}>{dept.name}</h3>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* Verification Banner */}

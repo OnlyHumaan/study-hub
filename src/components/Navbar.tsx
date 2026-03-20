@@ -1,16 +1,26 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Bell, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
     { label: "Home", path: "/" },
     { label: "Departments", path: "/departments" },
-    { label: "Resources", path: "/resources" },
+    { label: "Search", path: "/search" },
   ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-nav">
@@ -36,19 +46,21 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <div className="relative hidden lg:block">
+          <form onSubmit={handleSearch} className="relative hidden lg:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search resources..."
+              placeholder="Search courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9 w-52 h-9 bg-secondary border-border text-sm"
             />
-          </div>
+          </form>
           <button className="p-2 rounded-md hover:bg-secondary text-muted-foreground">
             <Bell className="h-5 w-5" />
           </button>
-          <button className="p-2 rounded-md hover:bg-secondary text-muted-foreground">
+          <Link to="/admin" className="p-2 rounded-md hover:bg-secondary text-muted-foreground">
             <User className="h-5 w-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>
