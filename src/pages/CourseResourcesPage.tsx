@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { ArrowRight, ExternalLink, Search, Code, Play, BookOpen, GraduationCap } from "lucide-react";
 import { getCourseById, getResourcesByCourse, getDepartmentById } from "@/data/mockData";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -35,9 +34,9 @@ const CourseResourcesPage = () => {
 
   return (
     <div className="container py-12">
-      <Badge className="bg-primary text-primary-foreground mb-4 text-[10px] tracking-widest uppercase font-semibold">
+      <span className="inline-block text-xs font-semibold tracking-widest text-primary uppercase mb-3">
         {dept?.name || "Department"} • {course.code}
-      </Badge>
+      </span>
       <h1 className="font-display text-4xl font-extrabold text-foreground">
         Course: {course.title}
       </h1>
@@ -53,8 +52,8 @@ const CourseResourcesPage = () => {
               onClick={() => setActiveFilter(f)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 activeFilter === f
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground"
+                  ? "bg-gradient-to-r from-primary to-accent text-primary-foreground"
+                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/30"
               }`}
             >
               {f}
@@ -63,7 +62,7 @@ const CourseResourcesPage = () => {
         </div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Filter resources..." className="pl-9 w-64 bg-card" />
+          <Input placeholder="Filter resources..." className="pl-9 w-64 bg-card rounded-full" />
         </div>
       </div>
 
@@ -76,33 +75,34 @@ const CourseResourcesPage = () => {
             return (
               <div
                 key={resource.id}
-                className={`rounded-xl overflow-hidden flex flex-col ${
+                className={`rounded-2xl overflow-hidden flex flex-col hover:shadow-md transition-shadow ${
                   idx === 0 && resource.isPrimary
                     ? "sm:col-span-2 sm:flex-row bg-card border border-border"
                     : "bg-card border border-border"
                 }`}
               >
                 {idx === 0 && resource.isPrimary && (
-                  <div className="sm:w-72 h-48 sm:h-auto bg-gradient-to-br from-primary/80 to-primary relative shrink-0">
-                    <Badge className="absolute top-4 left-4 bg-card/90 text-foreground text-[10px]">Primary Source</Badge>
+                  <div className="sm:w-72 h-48 sm:h-auto bg-gradient-to-br from-primary to-accent relative shrink-0">
+                    <span className="absolute top-4 left-4 bg-card/90 text-foreground text-[10px] font-semibold px-3 py-1 rounded-full">Primary Source</span>
                   </div>
                 )}
                 <div className="p-6 flex flex-col flex-1">
                   {!(idx === 0 && resource.isPrimary) && (
-                    <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
-                      <Icon className="h-5 w-5 text-accent-foreground" />
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
                   )}
                   <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">{resource.sourceWebsite}</p>
                   <h3 className="font-semibold text-foreground text-lg mb-2">{resource.title}</h3>
                   <p className="text-sm text-muted-foreground flex-1">{resource.description}</p>
-                  {idx === 0 && resource.isPrimary && (
-                    <p className="text-xs text-muted-foreground mt-3">Updated 2024</p>
-                  )}
                   <a href={resource.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-4">
                     <Button
                       variant={idx === 0 && resource.isPrimary ? "default" : "outline"}
-                      className="w-full justify-between"
+                      className={`w-full justify-between rounded-full ${
+                        idx === 0 && resource.isPrimary
+                          ? "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90"
+                          : "border-primary text-primary hover:bg-primary/5"
+                      }`}
                     >
                       Visit Resource
                       {idx === 0 && resource.isPrimary ? <ExternalLink className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
@@ -119,7 +119,7 @@ const CourseResourcesPage = () => {
         <p className="text-xs tracking-widest text-muted-foreground uppercase mb-3">
           Showing {filtered.length} of {course.resourceCount} Resources
         </p>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="gap-2 rounded-full border-primary text-primary hover:bg-primary/5">
           Load More Resources <ArrowRight className="h-4 w-4 rotate-90" />
         </Button>
       </div>

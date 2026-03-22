@@ -33,9 +33,9 @@ const sidebarItems = [
 ];
 
 const statCards = [
-  { label: "Total Departments", value: departments.length, icon: Building2, color: "bg-accent" },
-  { label: "Total Courses", value: courses.length.toLocaleString(), icon: GraduationCap, color: "bg-accent" },
-  { label: "Total Resources", value: resources.length.toLocaleString(), icon: FileText, color: "bg-accent" },
+  { label: "Total Departments", value: departments.length, icon: Building2 },
+  { label: "Total Courses", value: courses.length.toLocaleString(), icon: GraduationCap },
+  { label: "Total Resources", value: resources.length.toLocaleString(), icon: FileText },
 ];
 
 const initialTableResources = [
@@ -82,19 +82,8 @@ const AdminDashboard = () => {
     return Object.keys(e).length === 0;
   };
 
-  const openAdd = () => {
-    setEditingId(null);
-    setForm(emptyForm);
-    setErrors({});
-    setDialogOpen(true);
-  };
-
-  const openEdit = (r: typeof initialTableResources[0]) => {
-    setEditingId(r.id);
-    setForm({ course: r.course, courseName: r.courseName, title: r.title, source: r.source });
-    setErrors({});
-    setDialogOpen(true);
-  };
+  const openAdd = () => { setEditingId(null); setForm(emptyForm); setErrors({}); setDialogOpen(true); };
+  const openEdit = (r: typeof initialTableResources[0]) => { setEditingId(r.id); setForm({ course: r.course, courseName: r.courseName, title: r.title, source: r.source }); setErrors({}); setDialogOpen(true); };
 
   const handleSave = () => {
     if (!validate()) return;
@@ -102,8 +91,7 @@ const AdminDashboard = () => {
       setTableResources((prev) => prev.map((r) => r.id === editingId ? { ...r, ...form } : r));
       toast({ title: "Resource updated", description: `"${form.title}" has been updated successfully.` });
     } else {
-      const newId = String(Date.now());
-      setTableResources((prev) => [...prev, { id: newId, ...form }]);
+      setTableResources((prev) => [...prev, { id: String(Date.now()), ...form }]);
       toast({ title: "Resource added", description: `"${form.title}" has been added successfully.` });
     }
     setDialogOpen(false);
@@ -114,27 +102,24 @@ const AdminDashboard = () => {
     toast({ title: "Resource deleted", description: `"${title}" has been removed.`, variant: "destructive" });
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
+  const handleLogout = () => { logout(); navigate("/"); };
 
   return (
     <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
       <aside className="w-56 bg-card border-r border-border flex flex-col shrink-0">
         <div className="p-5 border-b border-border">
-          <h2 className="font-display font-bold text-foreground">Admin Panel</h2>
-          <p className="text-xs text-muted-foreground">University Oversight</p>
+          <h2 className="font-display font-bold text-primary text-xl">Etech.</h2>
+          <p className="text-xs text-muted-foreground">Admin Panel</p>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {sidebarItems.map((item) => (
             <button
               key={item.label}
               onClick={() => setActiveTab(item.label)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 activeTab === item.label
-                  ? "bg-accent text-primary"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-secondary"
               }`}
             >
@@ -144,7 +129,7 @@ const AdminDashboard = () => {
           ))}
         </nav>
         <div className="p-3">
-          <Button className="w-full mb-4 gap-2">
+          <Button className="w-full mb-4 gap-2 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
             <FileText className="h-4 w-4" /> Generate Report
           </Button>
           <div className="space-y-1 px-3 pb-4">
@@ -160,18 +145,17 @@ const AdminDashboard = () => {
 
       {/* Main content */}
       <div className="flex-1 overflow-auto">
-        {/* Header */}
         <header className="border-b border-border bg-card px-8 py-6 flex items-center justify-between">
           <div>
-            <h1 className="font-display text-2xl font-bold text-foreground">Curatory Dashboard</h1>
-            <p className="text-sm text-muted-foreground">Overseeing the academic resource ecosystem.</p>
+            <h1 className="font-display text-2xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-sm text-muted-foreground">Manage your academic resources</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Input placeholder="Find a resource..." className="pl-9 w-56 bg-secondary" />
+              <Input placeholder="Find a resource..." className="pl-9 w-56 bg-secondary rounded-full" />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">🔍</span>
             </div>
-            <Button className="gap-2" onClick={openAdd}>
+            <Button className="gap-2 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90" onClick={openAdd}>
               <Plus className="h-4 w-4" /> Add New Resource
             </Button>
           </div>
@@ -181,8 +165,8 @@ const AdminDashboard = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-6">
             {statCards.map((stat) => (
-              <div key={stat.label} className="bg-card border border-border rounded-xl p-6 flex items-center gap-4">
-                <div className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center`}>
+              <div key={stat.label} className="bg-card border border-border rounded-2xl p-6 flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                   <stat.icon className="h-7 w-7 text-primary" />
                 </div>
                 <div>
@@ -193,8 +177,8 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          {/* Resource Registry Table */}
-          <div className="bg-card border border-border rounded-xl">
+          {/* Table */}
+          <div className="bg-card border border-border rounded-2xl">
             <div className="flex items-center justify-between p-6 border-b border-border">
               <h2 className="font-display text-lg font-bold text-foreground">Resource Registry</h2>
               <div className="flex gap-2">
@@ -221,12 +205,12 @@ const AdminDashboard = () => {
                     </TableCell>
                     <TableCell className="text-foreground">{r.title}</TableCell>
                     <TableCell>
-                      <span className="inline-flex items-center gap-1 bg-secondary px-3 py-1 rounded-full text-xs text-muted-foreground">
+                      <span className="inline-flex items-center gap-1 bg-primary/10 px-3 py-1 rounded-full text-xs text-primary">
                         <LinkIcon className="h-3 w-3" /> {r.source}
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-3">
-                      <button onClick={() => openEdit(r)} className="text-sm text-muted-foreground hover:text-foreground">Edit</button>
+                      <button onClick={() => openEdit(r)} className="text-sm text-muted-foreground hover:text-primary">Edit</button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button className="text-sm text-destructive hover:text-destructive/80">Delete</button>
@@ -240,7 +224,7 @@ const AdminDashboard = () => {
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => handleDelete(r.id, r.title)}>
+                            <AlertDialogAction onClick={() => handleDelete(r.id, r.title)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
                               Delete
                             </AlertDialogAction>
                           </AlertDialogFooter>
@@ -256,54 +240,52 @@ const AdminDashboard = () => {
                 Showing {tableResources.length} of {tableResources.length} Resources
               </p>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">Previous</Button>
-                <Button size="sm">Next</Button>
+                <Button variant="outline" size="sm" className="rounded-full">Previous</Button>
+                <Button size="sm" className="rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">Next</Button>
               </div>
             </div>
           </div>
 
-          {/* Bottom section */}
+          {/* Bottom */}
           <div className="grid grid-cols-5 gap-6">
-            <div className="col-span-3 bg-card border border-border rounded-xl p-6">
+            <div className="col-span-3 bg-card border border-border rounded-2xl p-6">
               <h3 className="font-display font-bold text-foreground mb-6">Department Distribution</h3>
               <div className="flex items-end justify-around h-48 gap-4">
                 {barData.map((bar) => (
                   <div key={bar.name} className="flex flex-col items-center gap-2 flex-1">
-                    <div className="w-full bg-primary/20 rounded-t-md relative" style={{ height: bar.height }}>
-                      <div className="absolute inset-0 bg-primary/40 rounded-t-md" />
+                    <div className="w-full bg-primary/10 rounded-t-lg relative" style={{ height: bar.height }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary to-accent/60 rounded-t-lg" />
                     </div>
                     <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{bar.name}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="col-span-2 bg-tip rounded-xl p-6 flex flex-col text-tip-foreground">
+            <div className="col-span-2 bg-gradient-to-br from-primary to-accent rounded-2xl p-6 flex flex-col text-primary-foreground">
               <HelpCircle className="h-10 w-10 mb-4 opacity-80" />
-              <h3 className="font-display font-bold text-xl mb-2">Curatory Tip</h3>
+              <h3 className="font-display font-bold text-xl mb-2">Quick Tip</h3>
               <p className="text-sm opacity-90 flex-1">
                 Organize resources by 'Source Authority' to improve search relevance for students in postgraduate courses.
               </p>
-              <Button variant="outline" className="mt-4 border-tip-foreground/30 text-tip-foreground hover:bg-tip-foreground/10">
+              <Button variant="outline" className="mt-4 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full">
                 View Guidelines
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Footer */}
         <footer className="border-t border-border bg-card px-8 py-6 flex items-center justify-between">
-          <p className="text-sm font-semibold text-primary">University Digital Curatory</p>
+          <p className="text-sm font-semibold text-primary">Etech Admin</p>
           <nav className="flex gap-6 text-xs text-muted-foreground uppercase tracking-wide">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Accessibility</a>
-            <a href="#">Contact Support</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
           </nav>
-          <p className="text-xs text-muted-foreground">© 2024 University Digital Curatory. All Rights Reserved.</p>
+          <p className="text-xs text-muted-foreground">© 2026 Etech. All Rights Reserved.</p>
         </footer>
       </div>
 
-      {/* Add/Edit Dialog */}
+      {/* Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -312,29 +294,31 @@ const AdminDashboard = () => {
           <div className="space-y-4 py-2">
             <div>
               <Label>Course Code *</Label>
-              <Input value={form.course} onChange={(e) => setForm({ ...form, course: e.target.value })} placeholder="e.g. CS201" className="mt-1" />
+              <Input value={form.course} onChange={(e) => setForm({ ...form, course: e.target.value })} placeholder="e.g. CS201" className="mt-1 rounded-lg" />
               {errors.course && <p className="text-xs text-destructive mt-1">{errors.course}</p>}
             </div>
             <div>
               <Label>Course Name</Label>
-              <Input value={form.courseName} onChange={(e) => setForm({ ...form, courseName: e.target.value })} placeholder="e.g. Data Structures" className="mt-1" />
+              <Input value={form.courseName} onChange={(e) => setForm({ ...form, courseName: e.target.value })} placeholder="e.g. Data Structures" className="mt-1 rounded-lg" />
             </div>
             <div>
               <Label>Resource Title *</Label>
-              <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. MIT Lecture Series" className="mt-1" />
+              <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. MIT Lecture Series" className="mt-1 rounded-lg" />
               {errors.title && <p className="text-xs text-destructive mt-1">{errors.title}</p>}
             </div>
             <div>
               <Label>Source Website *</Label>
-              <Input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="e.g. ocw.mit.edu" className="mt-1" />
+              <Input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="e.g. ocw.mit.edu" className="mt-1 rounded-lg" />
               {errors.source && <p className="text-xs text-destructive mt-1">{errors.source}</p>}
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" className="rounded-full">Cancel</Button>
             </DialogClose>
-            <Button onClick={handleSave}>{editingId ? "Save Changes" : "Add Resource"}</Button>
+            <Button onClick={handleSave} className="rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+              {editingId ? "Save Changes" : "Add Resource"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -22,9 +22,9 @@ const AdminLogin = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
-      <div className="bg-card border border-border rounded-xl p-8 w-full max-w-md shadow-sm">
+      <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-md shadow-sm">
         <div className="text-center mb-6">
-          <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <LogIn className="h-7 w-7 text-primary" />
           </div>
           <h1 className="font-display text-2xl font-bold text-foreground">Admin Login</h1>
@@ -33,28 +33,14 @@ const AdminLogin = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm font-medium text-foreground">Email</label>
-            <Input
-              type="email"
-              placeholder="admin@university.edu"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1"
-            />
+            <Input type="email" placeholder="admin@university.edu" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1 rounded-lg" />
           </div>
           <div>
             <label className="text-sm font-medium text-foreground">Password</label>
-            <Input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mt-1"
-            />
+            <Input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 rounded-lg" />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
