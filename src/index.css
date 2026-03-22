@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,83 +6,90 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 30% 15%;
+    --background: 270 50% 99%;
+    --foreground: 270 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 15%;
+    --card-foreground: 270 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 15%;
+    --popover-foreground: 270 30% 12%;
 
-    --primary: 217 91% 50%;
+    --primary: 263 70% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 96%;
-    --secondary-foreground: 220 30% 20%;
+    --secondary: 270 30% 96%;
+    --secondary-foreground: 270 30% 20%;
 
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 270 15% 94%;
+    --muted-foreground: 270 10% 46%;
 
-    --accent: 217 91% 95%;
-    --accent-foreground: 217 91% 40%;
+    --accent: 330 81% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 217 91% 50%;
+    --border: 270 15% 90%;
+    --input: 270 15% 90%;
+    --ring: 263 70% 58%;
 
-    --radius: 0.625rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 10% 40%;
-    --sidebar-primary: 217 91% 50%;
+    --sidebar-foreground: 270 10% 40%;
+    --sidebar-primary: 263 70% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 91% 95%;
-    --sidebar-accent-foreground: 217 91% 40%;
-    --sidebar-border: 220 15% 92%;
-    --sidebar-ring: 217 91% 50%;
+    --sidebar-accent: 263 50% 95%;
+    --sidebar-accent-foreground: 263 70% 50%;
+    --sidebar-border: 270 15% 92%;
+    --sidebar-ring: 263 70% 58%;
 
-    --hero-bg: 220 25% 94%;
+    --hero-bg: 263 50% 97%;
     --nav-bg: 0 0% 100%;
-    --tip-bg: 217 91% 50%;
+    --tip-bg: 263 70% 58%;
     --tip-foreground: 0 0% 100%;
+
+    --gradient-start: 263 70% 58%;
+    --gradient-end: 330 81% 60%;
+    --lavender: 263 50% 97%;
   }
 
   .dark {
-    --background: 220 30% 8%;
-    --foreground: 220 15% 90%;
-    --card: 220 25% 12%;
-    --card-foreground: 220 15% 90%;
-    --popover: 220 25% 12%;
-    --popover-foreground: 220 15% 90%;
-    --primary: 217 91% 55%;
+    --background: 270 30% 6%;
+    --foreground: 270 15% 92%;
+    --card: 270 25% 10%;
+    --card-foreground: 270 15% 92%;
+    --popover: 270 25% 10%;
+    --popover-foreground: 270 15% 92%;
+    --primary: 263 70% 62%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 20% 18%;
-    --secondary-foreground: 220 15% 85%;
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 217 50% 20%;
-    --accent-foreground: 217 91% 70%;
+    --secondary: 270 20% 16%;
+    --secondary-foreground: 270 15% 85%;
+    --muted: 270 20% 16%;
+    --muted-foreground: 270 10% 55%;
+    --accent: 330 81% 55%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 20%;
-    --input: 220 20% 20%;
-    --ring: 217 91% 55%;
-    --sidebar-background: 220 25% 10%;
-    --sidebar-foreground: 220 10% 70%;
-    --sidebar-primary: 217 91% 55%;
+    --border: 270 20% 18%;
+    --input: 270 20% 18%;
+    --ring: 263 70% 62%;
+    --sidebar-background: 270 25% 8%;
+    --sidebar-foreground: 270 10% 70%;
+    --sidebar-primary: 263 70% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 50% 18%;
-    --sidebar-accent-foreground: 217 91% 70%;
-    --sidebar-border: 220 20% 18%;
-    --sidebar-ring: 217 91% 55%;
-    --hero-bg: 220 25% 12%;
-    --nav-bg: 220 25% 10%;
-    --tip-bg: 217 91% 45%;
+    --sidebar-accent: 263 50% 16%;
+    --sidebar-accent-foreground: 263 70% 70%;
+    --sidebar-border: 270 20% 16%;
+    --sidebar-ring: 263 70% 62%;
+    --hero-bg: 270 25% 10%;
+    --nav-bg: 270 25% 8%;
+    --tip-bg: 263 70% 50%;
     --tip-foreground: 0 0% 100%;
+    --gradient-start: 263 70% 55%;
+    --gradient-end: 330 81% 52%;
+    --lavender: 270 25% 10%;
   }
 }
 
