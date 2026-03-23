@@ -4,27 +4,56 @@ import { Search, GraduationCap, BookOpen, Users, Play, Star, ArrowRight, ArrowLe
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { departments, courses } from "@/data/mockData";
+import { useToast } from "@/hooks/use-toast";
 import heroStudent from "@/assets/hero-student.png";
 import teacherImg from "@/assets/teacher.png";
 import benefitsImg from "@/assets/benefits-collage.jpg";
 import courseWeb from "@/assets/course-web.jpg";
 import courseUx from "@/assets/course-ux.jpg";
 import courseData from "@/assets/course-data.jpg";
+import deptCs from "@/assets/dept-cs.png";
+import deptAccounting from "@/assets/dept-accounting.png";
+import deptEconomics from "@/assets/dept-economics.png";
+import deptMasscomm from "@/assets/dept-masscomm.png";
+import deptMicrobiology from "@/assets/dept-microbiology.png";
+import deptPolisci from "@/assets/dept-polisci.png";
+import deptBusiness from "@/assets/dept-business.png";
+import deptIntrel from "@/assets/dept-intrel.png";
+import deptSociology from "@/assets/dept-sociology.png";
+
+const deptImageMap: Record<string, string> = {
+  cs: deptCs,
+  accounting: deptAccounting,
+  economics: deptEconomics,
+  "mass-comm": deptMasscomm,
+  microbiology: deptMicrobiology,
+  "political-science": deptPolisci,
+  "business-admin": deptBusiness,
+  "international-relations": deptIntrel,
+  sociology: deptSociology,
+};
 
 const iconMap: Record<string, React.ElementType> = {
   Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, Users,
 };
 
 const popularCourses = [
-  { title: "Web Design & Development", category: "Web Design", price: "$560.00", lessons: 25, students: 108, image: courseWeb, instructor: "Alex K." },
-  { title: "Wireframing & Prototyping", category: "UX/UI Design", price: "$180.00", lessons: 12, students: 411, image: courseUx, instructor: "Jordan M." },
-  { title: "Python for Data Science", category: "Data Science", price: "$432.00", lessons: 41, students: 86, image: courseData, instructor: "Alex Taylor" },
+  { id: "cs201", title: "Web Design & Development", category: "Web Design", lessons: 25, students: 108, image: courseWeb, instructor: "Alex K." },
+  { id: "cs302", title: "Wireframing & Prototyping", category: "UX/UI Design", lessons: 12, students: 411, image: courseUx, instructor: "Jordan M." },
+  { id: "cs405", title: "Python for Data Science", category: "Data Science", lessons: 41, students: 86, image: courseData, instructor: "Alex Taylor" },
 ];
 
 const testimonials = [
-  { name: "Alexis Rodriguez", text: "Enrolling in courses at Etech was a game-changing decision. The platform's extensive learning experience, from lectures to resources, has made a significant impact on my academic journey.", stars: 5 },
-  { name: "Emily Chen", text: "Etech covered the practical insights and hands-on training I couldn't find anywhere else. A truly transformative learning experience that accelerated my professional growth.", stars: 5 },
-  { name: "James Anderson", text: "Highly recommended! The personalized feedback and diverse curriculum surprised me. The resources have broadened my understanding and skills significantly.", stars: 5 },
+  { name: "Amara Diallo", text: "Enrolling in courses at Etech was a game-changing decision. The platform's extensive learning experience, from lectures to resources, has made a significant impact on my academic journey.", stars: 5 },
+  { name: "Kwame Asante", text: "Etech covered the practical insights and hands-on training I couldn't find anywhere else. A truly transformative learning experience that accelerated my professional growth.", stars: 5 },
+  { name: "Fatima Bello", text: "Highly recommended! The personalized feedback and diverse curriculum surprised me. The resources have broadened my understanding and skills significantly.", stars: 5 },
+];
+
+const allTestimonials = [
+  ...testimonials,
+  { name: "Chidi Okafor", text: "The structured curriculum and quality resources helped me excel in my studies. I found exactly what I needed for every course.", stars: 5 },
+  { name: "Aisha Mensah", text: "A wonderful platform that truly understands university students' needs. The department-based organization makes finding resources effortless.", stars: 5 },
+  { name: "Yemi Adeyemi", text: "Etech transformed how I approach learning. The curated external resources saved me countless hours of searching.", stars: 5 },
 ];
 
 const perks = [
@@ -36,14 +65,34 @@ const perks = [
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [email, setEmail] = useState("");
+  const [testimonialPage, setTestimonialPage] = useState(0);
+
+  const visibleTestimonials = allTestimonials.slice(testimonialPage * 3, testimonialPage * 3 + 3);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
+  };
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      toast({ title: "Subscribed!", description: `We'll send updates to ${email}` });
+      setEmail("");
+    }
+  };
+
+  const handlePrevTestimonials = () => {
+    setTestimonialPage((p) => Math.max(0, p - 1));
+  };
+
+  const handleNextTestimonials = () => {
+    setTestimonialPage((p) => Math.min(Math.floor((allTestimonials.length - 1) / 3), p + 1));
   };
 
   return (
@@ -61,10 +110,19 @@ const HomePage = () => {
                 Explore a transformative approach to skill development on our online learning platform. Discover a new realm of learning experiences and elevate your expertise in cutting-edge ways.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
-                <Button className="rounded-full px-8 py-6 text-base bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                <Button
+                  onClick={() => navigate("/departments")}
+                  className="rounded-full px-8 py-6 text-base bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90"
+                >
                   Enroll Now
                 </Button>
-                <Button variant="outline" className="rounded-full px-8 py-6 text-base border-primary text-primary hover:bg-primary/5">
+                <Button
+                  variant="outline"
+                  className="rounded-full px-8 py-6 text-base border-primary text-primary hover:bg-primary/5"
+                  onClick={() => {
+                    toast({ title: "Demo Coming Soon", description: "Our video demo is being prepared. Stay tuned!" });
+                  }}
+                >
                   <Play className="h-4 w-4 mr-2" /> Watch Demo
                 </Button>
               </div>
@@ -127,7 +185,7 @@ const HomePage = () => {
       <section className="container py-16">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="rounded-3xl border-2 border-dashed border-primary/30 p-4 overflow-hidden">
-            <img src={benefitsImg} alt="Students learning" className="rounded-2xl w-full h-80 object-cover" />
+            <img src={benefitsImg} alt="Students learning" className="rounded-2xl w-full h-80 object-cover" loading="lazy" />
           </div>
           <div>
             <h2 className="font-display text-3xl font-bold text-foreground">
@@ -167,9 +225,9 @@ const HomePage = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {popularCourses.map((course) => (
-              <div key={course.title} className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border hover:shadow-md transition-shadow">
+              <Link key={course.title} to={`/courses/${course.id}`} className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border hover:shadow-md transition-shadow block">
                 <div className="relative">
-                  <img src={course.image} alt={course.title} className="w-full h-48 object-cover" />
+                  <img src={course.image} alt={course.title} className="w-full h-48 object-cover" loading="lazy" />
                   <span className="absolute top-3 left-3 bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
                     {course.category}
                   </span>
@@ -180,12 +238,11 @@ const HomePage = () => {
                     <span>{course.lessons} Classes</span>
                     <span>{course.students} Students</span>
                   </div>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                    <span className="text-lg font-bold text-primary">{course.price}</span>
+                  <div className="flex items-center justify-end mt-4 pt-4 border-t border-border">
                     <span className="text-sm text-muted-foreground">{course.instructor}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -211,14 +268,19 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
-            <Button className="mt-8 rounded-full px-8 py-6 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+            <Button
+              onClick={() => {
+                toast({ title: "Application Received!", description: "We'll review your instructor application shortly." });
+              }}
+              className="mt-8 rounded-full px-8 py-6 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90"
+            >
               Become an Instructor
             </Button>
           </div>
           <div className="flex justify-center">
             <div className="relative">
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <img src={teacherImg} alt="Become an instructor" className="relative z-10 w-64 md:w-80 object-contain" />
+              <img src={teacherImg} alt="Become an instructor" className="relative z-10 w-64 md:w-80 object-contain" loading="lazy" />
             </div>
           </div>
         </div>
@@ -234,7 +296,7 @@ const HomePage = () => {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
+            {visibleTestimonials.map((t) => (
               <div key={t.name} className="bg-card rounded-2xl p-6 shadow-sm border border-border">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold">
@@ -254,10 +316,18 @@ const HomePage = () => {
             ))}
           </div>
           <div className="flex justify-center gap-3 mt-8">
-            <button className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+            <button
+              onClick={handlePrevTestimonials}
+              disabled={testimonialPage === 0}
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
               <ArrowLeft className="h-4 w-4" />
             </button>
-            <button className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+            <button
+              onClick={handleNextTestimonials}
+              disabled={testimonialPage >= Math.floor((allTestimonials.length - 1) / 3)}
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -275,15 +345,20 @@ const HomePage = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {departments.map((dept) => {
             const Icon = iconMap[dept.icon] || Monitor;
+            const deptImg = deptImageMap[dept.id];
             return (
               <Link
                 key={dept.id}
                 to={`/departments/${dept.id}`}
                 className="group rounded-2xl p-6 bg-card border border-border hover:shadow-md hover:border-primary/30 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
+                {deptImg ? (
+                  <img src={deptImg} alt={dept.name} className="w-14 h-14 object-contain mb-4" loading="lazy" />
+                ) : (
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                )}
                 <p className="text-[10px] uppercase tracking-widest font-medium text-muted-foreground mb-1">{dept.faculty}</p>
                 <h3 className="font-semibold text-sm text-foreground">{dept.name}</h3>
               </Link>
@@ -306,7 +381,7 @@ const HomePage = () => {
           <p className="text-primary-foreground/80 mt-2">
             Subscribe to get in touch and to enjoy exclusive discounts, premium courses, and more.
           </p>
-          <div className="flex items-center max-w-md mx-auto mt-6 bg-primary-foreground/20 rounded-full overflow-hidden backdrop-blur-sm">
+          <form onSubmit={handleSubscribe} className="flex items-center max-w-md mx-auto mt-6 bg-primary-foreground/20 rounded-full overflow-hidden backdrop-blur-sm">
             <div className="flex items-center flex-1 px-5">
               <Mail className="h-5 w-5 text-primary-foreground/70 mr-3 shrink-0" />
               <input
@@ -314,13 +389,14 @@ const HomePage = () => {
                 placeholder="Enter your email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
                 className="flex-1 bg-transparent border-0 outline-none text-primary-foreground placeholder:text-primary-foreground/50 text-sm py-3"
               />
             </div>
-            <Button className="rounded-full h-11 px-6 m-1 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
+            <Button type="submit" className="rounded-full h-11 px-6 m-1 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
               Subscribe
             </Button>
-          </div>
+          </form>
         </div>
       </section>
     </>

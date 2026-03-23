@@ -3,25 +3,37 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
     { label: "Courses", path: "/departments" },
-    { label: "Teachers", path: "#" },
-    { label: "Offers", path: "#" },
-    { label: "Contact", path: "#" },
+    { label: "Teachers", path: "#teachers" },
+    { label: "Offers", path: "#offers" },
+    { label: "Contact", path: "#contact" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleNavClick = (link: { label: string; path: string }) => {
+    setMobileOpen(false);
+    if (link.path.startsWith("#")) {
+      if (location.pathname !== "/") {
+        navigate("/");
+      }
+      toast({ title: `${link.label}`, description: `${link.label} section coming soon!` });
     }
   };
 
@@ -41,17 +53,27 @@ const Navbar = () => {
           >
             Home
           </Link>
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive(link.path) ? "text-primary" : "text-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.path.startsWith("/") ? (
+              <Link
+                key={link.label}
+                to={link.path}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  isActive(link.path) ? "text-primary" : "text-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <button
+                key={link.label}
+                onClick={() => handleNavClick(link)}
+                className="text-sm font-medium transition-colors hover:text-primary text-foreground"
+              >
+                {link.label}
+              </button>
+            )
+          )}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -67,7 +89,10 @@ const Navbar = () => {
           <Link to="/admin" className="text-sm font-medium text-foreground hover:text-primary">
             Sign In
           </Link>
-          <Button className="rounded-full px-6 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+          <Button
+            onClick={() => navigate("/departments")}
+            className="rounded-full px-6 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90"
+          >
             Free Trial
           </Button>
         </div>
@@ -80,13 +105,19 @@ const Navbar = () => {
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-nav px-4 pb-4 space-y-3">
           <Link to="/" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Home</Link>
-          {navLinks.map((link) => (
-            <Link key={link.label} to={link.path} className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.path.startsWith("/") ? (
+              <Link key={link.label} to={link.path} className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>
+                {link.label}
+              </Link>
+            ) : (
+              <button key={link.label} className="block py-2 text-sm font-medium text-foreground w-full text-left" onClick={() => handleNavClick(link)}>
+                {link.label}
+              </button>
+            )
+          )}
           <Link to="/admin" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Sign In</Link>
-          <Button className="w-full rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground">Free Trial</Button>
+          <Button onClick={() => { setMobileOpen(false); navigate("/departments"); }} className="w-full rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground">Free Trial</Button>
         </div>
       )}
     </header>
