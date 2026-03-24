@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, GraduationCap, BookOpen, Users, Play, Star, ArrowRight, ArrowLeft, Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, CheckCircle2, Mail } from "lucide-react";
+import { Search, GraduationCap, BookOpen, Users, Play, Star, ArrowRight, ArrowLeft, Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, CheckCircle2, Mail, FlaskConical, ShieldAlert, Cpu, Building2, UserCog, Server, Languages, ClipboardList, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { departments, courses } from "@/data/mockData";
@@ -20,6 +20,15 @@ import deptPolisci from "@/assets/dept-polisci.png";
 import deptBusiness from "@/assets/dept-business.png";
 import deptIntrel from "@/assets/dept-intrel.png";
 import deptSociology from "@/assets/dept-sociology.png";
+import deptBiochemistry from "@/assets/dept-biochemistry.png";
+import deptCriminology from "@/assets/dept-criminology.png";
+import deptCompeng from "@/assets/dept-compeng.png";
+import deptEstate from "@/assets/dept-estate.png";
+import deptHr from "@/assets/dept-hr.png";
+import deptImt from "@/assets/dept-imt.png";
+import deptLinguistics from "@/assets/dept-linguistics.png";
+import deptProjmgmt from "@/assets/dept-projmgmt.png";
+import deptPubadmin from "@/assets/dept-pubadmin.png";
 
 const deptImageMap: Record<string, string> = {
   cs: deptCs,
@@ -31,10 +40,20 @@ const deptImageMap: Record<string, string> = {
   "business-admin": deptBusiness,
   "international-relations": deptIntrel,
   sociology: deptSociology,
+  biochemistry: deptBiochemistry,
+  criminology: deptCriminology,
+  "computer-engineering": deptCompeng,
+  "estate-management": deptEstate,
+  "human-resources": deptHr,
+  "info-management-tech": deptImt,
+  linguistics: deptLinguistics,
+  "project-management": deptProjmgmt,
+  "public-admin": deptPubadmin,
 };
 
 const iconMap: Record<string, React.ElementType> = {
   Monitor, Calculator, TrendingUp, Mic, Microscope, Landmark, Briefcase, Globe, Users,
+  FlaskConical, ShieldAlert, Cpu, Building2, UserCog, Server, Languages, ClipboardList, Building,
 };
 
 const popularCourses = [
