@@ -7,7 +7,7 @@ import { departments, courses } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
 import heroStudent from "@/assets/hero-students.jpg";
 import teacherImg from "@/assets/teacher.png";
-import benefitsImg from "@/assets/benefits-collage.jpg";
+import benefitsImg from "@/assets/group-students.jpg";
 import courseWeb from "@/assets/course-web.jpg";
 import courseUx from "@/assets/course-ux.jpg";
 import courseData from "@/assets/course-data.jpg";
