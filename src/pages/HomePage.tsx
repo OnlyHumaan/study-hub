@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { departments, courses } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
-import heroStudent from "@/assets/hero-student.png";
+import heroStudent from "@/assets/hero-students.jpg";
 import teacherImg from "@/assets/teacher.png";
 import benefitsImg from "@/assets/benefits-collage.jpg";
 import courseWeb from "@/assets/course-web.jpg";
