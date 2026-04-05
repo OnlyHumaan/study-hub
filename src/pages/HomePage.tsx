@@ -122,8 +122,8 @@ const HomePage = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight">
-                Develop your skills in a new and{" "}
-                <span className="text-primary">unique way</span>
+                ESTAM's Academic{" "}
+                <span className="text-primary">Resource Finder</span>
               </h1>
               <p className="mt-5 text-muted-foreground max-w-md leading-relaxed">
                 Explore a transformative approach to skill development on our online learning platform. Discover a new realm of learning experiences and elevate your expertise in cutting-edge ways.

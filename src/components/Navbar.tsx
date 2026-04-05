@@ -41,7 +41,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-nav border-b border-border/50 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-display text-2xl font-extrabold text-primary">
-          Etech.
+          ARF.
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
