@@ -148,7 +148,9 @@ const HomePage = () => {
             </div>
             <div className="relative flex justify-center">
               <div className="w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <img src={heroStudent} alt="Student learning online" className="relative z-10 w-72 md:w-96 object-contain" />
+              <div className="relative z-10 w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden">
+                <img src={heroStudent} alt="ESTAM students in uniform" className="w-full h-full object-cover object-top" />
+              </div>
               <div className="absolute top-4 right-0 md:right-4 z-20 bg-card rounded-2xl shadow-lg px-4 py-3 flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <BookOpen className="h-4 w-4 text-primary" />
