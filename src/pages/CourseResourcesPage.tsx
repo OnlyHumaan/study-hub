@@ -116,7 +116,7 @@ const CourseResourcesPage = () => {
           {filtered.map((resource, idx) => {
             const Icon = typeIcons[resource.type] || BookOpen;
             const thumbnail = thumbnailMap[resource.sourceWebsite];
-            const isPrimary = idx === 0 && resource.isPrimary;
+            const isPrimary = !!resource.isPrimary;
 
             return (
               <div
