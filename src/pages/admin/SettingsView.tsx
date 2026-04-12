@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 
 const SettingsView = () => {
-  const [siteName, setSiteName] = useState("Etech Academic Resource Finder");
+  const [siteName, setSiteName] = useState("ARF Academic Resource Finder");
   const [adminEmail, setAdminEmail] = useState("admin@university.edu");
   const [darkMode, setDarkMode] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);

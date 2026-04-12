@@ -63,8 +63,8 @@ const popularCourses = [
 ];
 
 const testimonials = [
-  { name: "Amara Diallo", text: "Enrolling in courses at Etech was a game-changing decision. The platform's extensive learning experience, from lectures to resources, has made a significant impact on my academic journey.", stars: 5 },
-  { name: "Kwame Asante", text: "Etech covered the practical insights and hands-on training I couldn't find anywhere else. A truly transformative learning experience that accelerated my professional growth.", stars: 5 },
+  { name: "Amara Diallo", text: "Enrolling in courses at ARF was a game-changing decision. The platform's extensive learning experience, from lectures to resources, has made a significant impact on my academic journey.", stars: 5 },
+  { name: "Kwame Asante", text: "ARF covered the practical insights and hands-on training I couldn't find anywhere else. A truly transformative learning experience that accelerated my professional growth.", stars: 5 },
   { name: "Fatima Bello", text: "Highly recommended! The personalized feedback and diverse curriculum surprised me. The resources have broadened my understanding and skills significantly.", stars: 5 },
 ];
 
@@ -72,7 +72,7 @@ const allTestimonials = [
   ...testimonials,
   { name: "Chidi Okafor", text: "The structured curriculum and quality resources helped me excel in my studies. I found exactly what I needed for every course.", stars: 5 },
   { name: "Aisha Mensah", text: "A wonderful platform that truly understands university students' needs. The department-based organization makes finding resources effortless.", stars: 5 },
-  { name: "Yemi Adeyemi", text: "Etech transformed how I approach learning. The curated external resources saved me countless hours of searching.", stars: 5 },
+  { name: "Yemi Adeyemi", text: "ARF transformed how I approach learning. The curated external resources saved me countless hours of searching.", stars: 5 },
 ];
 
 const perks = [
