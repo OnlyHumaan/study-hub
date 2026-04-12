@@ -44,7 +44,7 @@ const AdminDashboard = () => {
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url; a.download = "etech_report.csv"; a.click();
+    a.href = url; a.download = "arf_report.csv"; a.click();
     URL.revokeObjectURL(url);
     toast({ title: "Report generated", description: "CSV report has been downloaded." });
   };
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <aside className="w-56 bg-card border-r border-border flex flex-col shrink-0">
         <div className="p-5 border-b border-border">
-          <h2 className="font-display font-bold text-primary text-xl">Etech.</h2>
+          <h2 className="font-display font-bold text-primary text-xl">ARF.</h2>
           <p className="text-xs text-muted-foreground">Admin Panel</p>
         </div>
         <nav className="flex-1 p-3 space-y-1">
@@ -103,13 +103,13 @@ const AdminDashboard = () => {
         {renderView()}
 
         <footer className="border-t border-border bg-card px-8 py-6 flex items-center justify-between">
-          <p className="text-sm font-semibold text-primary">Etech Admin</p>
+          <p className="text-sm font-semibold text-primary">ARF Admin</p>
           <nav className="flex gap-6 text-xs text-muted-foreground uppercase tracking-wide">
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
             <button onClick={() => setSupportOpen(true)} className="uppercase">Support</button>
           </nav>
-          <p className="text-xs text-muted-foreground">© 2026 Etech. All Rights Reserved.</p>
+          <p className="text-xs text-muted-foreground">© 2026 ARF. All Rights Reserved.</p>
         </footer>
       </div>
 

@@ -20,7 +20,7 @@ const Footer = () => {
           {/* Logo & Social */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-display text-2xl font-extrabold text-primary-foreground">
-              Etech.
+              ARF.
             </Link>
             <p className="text-sm opacity-60 mt-3 leading-relaxed">
               Empowering learners worldwide with quality online education and curated resources.
@@ -85,14 +85,14 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-2.5 text-sm opacity-60">
               <li><a href="tel:+15551234567" className="hover:opacity-100">+1 (555) 123-4567</a></li>
-              <li><a href="mailto:info@etech.edu" className="hover:opacity-100">info@etech.edu</a></li>
+              <li><a href="mailto:info@arf.edu" className="hover:opacity-100">info@arf.edu</a></li>
               <li>123 University Ave</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-background/10 mt-12 pt-6 text-center text-sm opacity-50">
-          © 2026 Etech. All Rights Reserved.
+          © 2026 ARF. All Rights Reserved.
         </div>
       </div>
     </footer>
