@@ -8,22 +8,38 @@ import EmptyState from "@/components/EmptyState";
 
 import resourceMit from "@/assets/resource-mit.jpg";
 import resourceCoursera from "@/assets/resource-coursera.jpg";
+import resourceCourseraBrand from "@/assets/resource-coursera-brand.jpg";
 import resourceGfg from "@/assets/resource-gfg.jpg";
 import resourceYoutube from "@/assets/resource-youtube.jpg";
+import resourceYoutubeBrand from "@/assets/resource-youtube-brand.jpg";
 import resourceKhan from "@/assets/resource-khan.jpg";
+import resourceKhanAcademy from "@/assets/resource-khan-academy.jpg";
 import resourceWorldbank from "@/assets/resource-worldbank.jpg";
 import resourceNature from "@/assets/resource-nature.jpg";
+import resourceAccountingCoach from "@/assets/resource-accountingcoach.jpg";
+import resourceAcca from "@/assets/resource-acca.jpg";
+import resourceFirs from "@/assets/resource-firs.jpg";
+import resourceCima from "@/assets/resource-cima.jpg";
+import resourceIfrs from "@/assets/resource-ifrs.jpg";
+import resourceIcaew from "@/assets/resource-icaew.jpg";
 
 const thumbnailMap: Record<string, string> = {
   "MIT OpenCourseWare": resourceMit,
   "ocw.mit.edu": resourceMit,
-  "Coursera": resourceCoursera,
+  "Coursera": resourceCourseraBrand,
   "GeeksForGeeks": resourceGfg,
   "YouTube Academic": resourceYoutube,
-  "Khan Academy": resourceKhan,
+  "YouTube": resourceYoutubeBrand,
+  "Khan Academy": resourceKhanAcademy,
   "worldbank.org": resourceWorldbank,
   "nature.com": resourceNature,
   "medici.org": resourceMit,
+  "AccountingCoach": resourceAccountingCoach,
+  "ACCA Global": resourceAcca,
+  "FIRS": resourceFirs,
+  "CIMA": resourceCima,
+  "IFRS Foundation": resourceIfrs,
+  "ICAEW": resourceIcaew,
 };
 
 const typeFilters = ["All Resources", "Video Lectures", "Interactive Tutorials", "Text Documentation", "Certification Courses"];
@@ -100,7 +116,7 @@ const CourseResourcesPage = () => {
           {filtered.map((resource, idx) => {
             const Icon = typeIcons[resource.type] || BookOpen;
             const thumbnail = thumbnailMap[resource.sourceWebsite];
-            const isPrimary = idx === 0 && resource.isPrimary;
+            const isPrimary = !!resource.isPrimary;
 
             return (
               <div

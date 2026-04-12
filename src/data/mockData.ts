@@ -13,6 +13,7 @@ export interface Course {
   description: string;
   departmentId: string;
   level: "Undergraduate" | "Masters" | "Doctoral" | "Core Curriculum";
+  academicLevel?: "100 Level" | "200 Level" | "300 Level" | "400 Level";
   resourceCount: number;
 }
 
@@ -28,7 +29,7 @@ export interface Resource {
 }
 
 export const departments: Department[] = [
-  { id: "accounting", name: "Accounting", faculty: "Faculty of Management", icon: "Calculator", courseCount: 4 },
+  { id: "accounting", name: "Accounting", faculty: "Faculty of Management", icon: "Calculator", courseCount: 8 },
   { id: "biochemistry", name: "BioChemistry", faculty: "Faculty of Science", icon: "FlaskConical", courseCount: 3 },
   { id: "business-admin", name: "Business Administration", faculty: "Faculty of Management", icon: "Briefcase", courseCount: 4 },
   { id: "cs", name: "Computer Science", faculty: "Faculty of Science", icon: "Monitor", courseCount: 5 },
@@ -49,11 +50,17 @@ export const departments: Department[] = [
 ];
 
 export const courses: Course[] = [
-  // Accounting
-  { id: "acc101", code: "ACC-101", title: "Principles of Accounting", description: "Fundamentals of financial accounting including journals, ledgers, and trial balance.", departmentId: "accounting", level: "Undergraduate", resourceCount: 4 },
-  { id: "acc201", code: "ACC-201", title: "Cost Accounting", description: "Cost classification, job costing, process costing, and budgeting techniques.", departmentId: "accounting", level: "Undergraduate", resourceCount: 3 },
-  { id: "acc301", code: "ACC-301", title: "Auditing & Assurance", description: "Principles and practices of external auditing, internal controls, and professional ethics.", departmentId: "accounting", level: "Undergraduate", resourceCount: 3 },
-  { id: "acc401", code: "ACC-401", title: "Taxation", description: "Nigerian tax legislation, personal and corporate tax computation, and tax planning.", departmentId: "accounting", level: "Undergraduate", resourceCount: 3 },
+  // Accounting — 100 Level
+  { id: "acc101", code: "ACC-101", title: "Principles of Accounting", description: "Fundamentals of financial accounting including journals, ledgers, and trial balance.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 4 },
+  { id: "acc102", code: "ACC-102", title: "Business Mathematics", description: "Quantitative methods and mathematical applications in accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 3 },
+  // Accounting — 200 Level
+  { id: "acc201", code: "ACC-201", title: "Cost Accounting", description: "Cost classification, job costing, process costing, and budgeting techniques.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
+  { id: "acc202", code: "ACC-202", title: "Management Accounting", description: "Budgeting, variance analysis, and performance measurement.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
+  { id: "acc203", code: "ACC-203", title: "Auditing & Assurance", description: "Principles and practices of external auditing, internal controls, and professional ethics.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
+  // Accounting — 300 Level
+  { id: "acc301", code: "ACC-301", title: "Financial Reporting & IFRS", description: "International financial reporting standards and financial statement preparation.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
+  { id: "acc302", code: "ACC-302", title: "Taxation", description: "Nigerian tax legislation, personal and corporate tax computation, and tax planning.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
+  { id: "acc303", code: "ACC-303", title: "Advanced Auditing", description: "Advanced external and internal audit practices and forensic accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
 
   // BioChemistry
   { id: "bch101", code: "BCH-101", title: "General Biochemistry", description: "Introduction to the chemistry of biomolecules, enzymes, and metabolic pathways.", departmentId: "biochemistry", level: "Undergraduate", resourceCount: 3 },
@@ -148,20 +155,46 @@ export const courses: Course[] = [
 ];
 
 export const resources: Resource[] = [
-  // Accounting
-  { id: "r-acc1", courseId: "acc101", title: "Financial Accounting Fundamentals", description: "Complete video series on double-entry bookkeeping, journals, and financial statements.", sourceWebsite: "Khan Academy", sourceUrl: "https://www.khanacademy.org/economics-finance-domain/core-finance/accounting-and-financial-stateme", type: "Video Lectures", isPrimary: true },
-  { id: "r-acc2", courseId: "acc101", title: "Introduction to Financial Accounting", description: "University-level course on accounting principles from Wharton.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org/learn/wharton-accounting", type: "Video Lectures" },
-  { id: "r-acc3", courseId: "acc101", title: "AccountingCoach Free Resources", description: "Comprehensive text-based explanations of accounting topics with practice problems.", sourceWebsite: "AccountingCoach", sourceUrl: "https://www.accountingcoach.com", type: "Text Documentation" },
-  { id: "r-acc4", courseId: "acc101", title: "Accounting Basics Tutorial", description: "Step-by-step accounting tutorials for beginners with practical examples.", sourceWebsite: "YouTube Academic", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
-  { id: "r-acc5", courseId: "acc201", title: "Cost Accounting: A Managerial Emphasis", description: "Detailed lectures on cost allocation, variance analysis, and activity-based costing.", sourceWebsite: "MIT OpenCourseWare", sourceUrl: "https://ocw.mit.edu", type: "Video Lectures", isPrimary: true },
-  { id: "r-acc6", courseId: "acc201", title: "Cost Accounting Self-Study", description: "Interactive lessons covering job costing, process costing, and standard costing.", sourceWebsite: "AccountingCoach", sourceUrl: "https://www.accountingcoach.com", type: "Interactive Tutorials" },
-  { id: "r-acc7", courseId: "acc201", title: "Managerial Accounting Overview", description: "Video course covering budgeting, cost behaviour, and decision-making tools.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Video Lectures" },
-  { id: "r-acc8", courseId: "acc301", title: "Auditing & Assurance Services", description: "Course covering audit planning, internal controls, and professional standards.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Video Lectures", isPrimary: true },
-  { id: "r-acc9", courseId: "acc301", title: "ACCA Audit Study Guide", description: "Comprehensive text guide on auditing standards and practices.", sourceWebsite: "ACCA Global", sourceUrl: "https://www.accaglobal.com", type: "Text Documentation" },
-  { id: "r-acc10", courseId: "acc301", title: "Audit Process Explained", description: "Video walkthrough of the complete audit cycle from planning to reporting.", sourceWebsite: "YouTube Academic", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
-  { id: "r-acc11", courseId: "acc401", title: "Taxation Principles", description: "Course on personal and corporate tax computation with Nigerian tax legislation.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Video Lectures", isPrimary: true },
-  { id: "r-acc12", courseId: "acc401", title: "FIRS Tax Guide", description: "Official Nigerian tax documentation and guidelines.", sourceWebsite: "FIRS", sourceUrl: "https://www.firs.gov.ng", type: "Text Documentation" },
-  { id: "r-acc13", courseId: "acc401", title: "Tax Planning Strategies", description: "Video series on tax planning for individuals and businesses.", sourceWebsite: "YouTube Academic", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
+  // ACC-101 Principles of Accounting
+  { id: "r-acc1", courseId: "acc101", title: "Accounting & Financial Statements", description: "Complete video series on double-entry bookkeeping, journals, and financial statements.", sourceWebsite: "Khan Academy", sourceUrl: "https://www.khanacademy.org/economics-finance-domain/core-finance/accounting-and-financial-stateme", type: "Video Lectures", isPrimary: true },
+  { id: "r-acc2", courseId: "acc101", title: "Accounting Basics", description: "Comprehensive text-based explanations of accounting topics with practice problems.", sourceWebsite: "AccountingCoach", sourceUrl: "https://www.accountingcoach.com", type: "Text Documentation" },
+  { id: "r-acc3", courseId: "acc101", title: "Introduction to Financial Accounting", description: "University-level course on accounting principles from Wharton.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org/learn/wharton-accounting", type: "Certification Courses" },
+  { id: "r-acc4", courseId: "acc101", title: "Accounting Basics Tutorial by Edspira", description: "Step-by-step accounting tutorials for beginners with practical examples.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com/@Edspira", type: "Video Lectures" },
+
+  // ACC-102 Business Mathematics
+  { id: "r-acc5", courseId: "acc102", title: "Algebra & Mathematics", description: "Comprehensive math tutorials covering algebra, calculus, and quantitative methods.", sourceWebsite: "Khan Academy", sourceUrl: "https://www.khanacademy.org/math", type: "Video Lectures", isPrimary: true },
+  { id: "r-acc6", courseId: "acc102", title: "Mathematics for Engineers", description: "Coursera course on applied mathematics and quantitative reasoning.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Certification Courses" },
+  { id: "r-acc7", courseId: "acc102", title: "Business Math by Prof. Leonard", description: "Video lectures covering business mathematics concepts and applications.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com/@ProfessorLeonard", type: "Video Lectures" },
+
+  // ACC-201 Cost Accounting
+  { id: "r-acc8", courseId: "acc201", title: "Cost Accounting by Prof. Coram", description: "Detailed lectures on cost allocation, variance analysis, and activity-based costing.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures", isPrimary: true },
+  { id: "r-acc9", courseId: "acc201", title: "Cost Accounting Explained", description: "Interactive lessons covering job costing, process costing, and standard costing.", sourceWebsite: "AccountingCoach", sourceUrl: "https://www.accountingcoach.com", type: "Text Documentation" },
+  { id: "r-acc10", courseId: "acc201", title: "Managerial Accounting Fundamentals", description: "Video course covering budgeting, cost behaviour, and decision-making tools.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Certification Courses" },
+
+  // ACC-202 Management Accounting
+  { id: "r-acc11", courseId: "acc202", title: "Management Accounting Resources", description: "Professional resources for management accounting practice and study.", sourceWebsite: "CIMA", sourceUrl: "https://www.cimaglobal.com", type: "Text Documentation", isPrimary: true },
+  { id: "r-acc12", courseId: "acc202", title: "Management Accounting by ACCA", description: "Video lectures on budgeting, variance analysis, and performance measurement.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
+  { id: "r-acc13", courseId: "acc202", title: "Accounting for Decision Making", description: "Course on management accounting concepts and decision-making frameworks.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Certification Courses" },
+
+  // ACC-203 Auditing & Assurance
+  { id: "r-acc14", courseId: "acc203", title: "Audit & Assurance Resources", description: "Professional auditing resources, standards, and study materials.", sourceWebsite: "ICAEW", sourceUrl: "https://www.icaew.com", type: "Text Documentation", isPrimary: true },
+  { id: "r-acc15", courseId: "acc203", title: "Auditing Concepts by ACCA", description: "Video walkthrough of auditing principles and professional ethics.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
+  { id: "r-acc16", courseId: "acc203", title: "Audit Study Resources", description: "Comprehensive text guide on auditing standards and practices.", sourceWebsite: "ACCA Global", sourceUrl: "https://www.accaglobal.com", type: "Text Documentation" },
+
+  // ACC-301 Financial Reporting & IFRS
+  { id: "r-acc17", courseId: "acc301", title: "Official IFRS Resources", description: "Official international financial reporting standards documentation and guidance.", sourceWebsite: "IFRS Foundation", sourceUrl: "https://www.ifrs.org", type: "Text Documentation", isPrimary: true },
+  { id: "r-acc18", courseId: "acc301", title: "IFRS Explained", description: "Video series explaining IFRS standards and financial reporting requirements.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
+  { id: "r-acc19", courseId: "acc301", title: "Financial Reporting", description: "Course on financial statement preparation and IFRS compliance.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Certification Courses" },
+
+  // ACC-302 Taxation
+  { id: "r-acc20", courseId: "acc302", title: "Nigerian Tax System Explained", description: "Video series on personal and corporate tax computation in Nigeria.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures", isPrimary: true },
+  { id: "r-acc21", courseId: "acc302", title: "Federal Inland Revenue Service Resources", description: "Official Nigerian tax documentation and guidelines.", sourceWebsite: "FIRS", sourceUrl: "https://www.firs.gov.ng", type: "Text Documentation" },
+  { id: "r-acc22", courseId: "acc302", title: "U.S. Federal Taxation", description: "Course on taxation principles and international comparison.", sourceWebsite: "Coursera", sourceUrl: "https://www.coursera.org", type: "Certification Courses" },
+
+  // ACC-303 Advanced Auditing
+  { id: "r-acc23", courseId: "acc303", title: "Advanced Audit Resources", description: "Advanced audit methodologies, forensic accounting, and professional standards.", sourceWebsite: "ACCA Global", sourceUrl: "https://www.accaglobal.com", type: "Text Documentation", isPrimary: true },
+  { id: "r-acc24", courseId: "acc303", title: "Advanced Auditing by ACCA", description: "Video lectures on advanced audit practices and forensic accounting.", sourceWebsite: "YouTube", sourceUrl: "https://www.youtube.com", type: "Video Lectures" },
+  { id: "r-acc25", courseId: "acc303", title: "Advanced Audit & Assurance", description: "Professional resources on advanced auditing standards and practices.", sourceWebsite: "ICAEW", sourceUrl: "https://www.icaew.com", type: "Text Documentation" },
 
   // BioChemistry
   { id: "r-bch1", courseId: "bch101", title: "Biochemistry Fundamentals", description: "MIT lectures covering amino acids, proteins, enzymes, and carbohydrate chemistry.", sourceWebsite: "MIT OpenCourseWare", sourceUrl: "https://ocw.mit.edu", type: "Video Lectures", isPrimary: true },
