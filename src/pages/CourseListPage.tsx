@@ -122,35 +122,88 @@ const CourseListPage = () => {
 
       {courses.length === 0 ? (
         <EmptyState message="No courses found in this department" />
-      ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {courses.map((course) => {
-            const Icon = courseIconMap[course.title] || BookOpen;
-            return (
-              <div key={course.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
-                <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                  <Icon className="h-16 w-16 text-primary/40" />
-                </div>
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <span className="text-xs font-medium text-muted-foreground">{course.code}</span>
+      ) : (() => {
+        const hasLevels = courses.some((c) => c.academicLevel);
+        if (hasLevels) {
+          const levelOrder = ["100 Level", "200 Level", "300 Level", "400 Level"];
+          const grouped = levelOrder
+            .map((level) => ({
+              level,
+              items: courses.filter((c) => c.academicLevel === level),
+            }))
+            .filter((g) => g.items.length > 0);
+
+          return (
+            <div className="mt-10 space-y-12">
+              {grouped.map((group) => (
+                <div key={group.level}>
+                  <h2 className="font-display text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+                    <span className="inline-block w-2 h-8 rounded-full bg-gradient-to-b from-primary to-accent" />
+                    {group.level}
+                  </h2>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {group.items.map((course) => {
+                      const Icon = courseIconMap[course.title] || BookOpen;
+                      return (
+                        <div key={course.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
+                          <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                            <Icon className="h-16 w-16 text-primary/40" />
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <div className="flex items-start justify-between mb-3">
+                              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Icon className="h-5 w-5 text-primary" />
+                              </div>
+                              <span className="text-xs font-medium text-muted-foreground">{course.code}</span>
+                            </div>
+                            <h3 className="font-semibold text-foreground mb-1">{course.title}</h3>
+                            <p className="text-sm text-muted-foreground flex-1">{course.description}</p>
+                            <Link to={`/courses/${course.id}`}>
+                              <Button variant="outline" className="w-full mt-4 justify-between rounded-full border-primary text-primary hover:bg-primary/5">
+                                View Resources <ArrowRight className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">{course.title}</h3>
-                  <p className="text-sm text-muted-foreground flex-1">{course.description}</p>
-                  <Link to={`/courses/${course.id}`}>
-                    <Button variant="outline" className="w-full mt-4 justify-between rounded-full border-primary text-primary hover:bg-primary/5">
-                      View Resources <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              ))}
+            </div>
+          );
+        }
+
+        return (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {courses.map((course) => {
+              const Icon = courseIconMap[course.title] || BookOpen;
+              return (
+                <div key={course.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
+                  <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                    <Icon className="h-16 w-16 text-primary/40" />
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-xs font-medium text-muted-foreground">{course.code}</span>
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">{course.title}</h3>
+                    <p className="text-sm text-muted-foreground flex-1">{course.description}</p>
+                    <Link to={`/courses/${course.id}`}>
+                      <Button variant="outline" className="w-full mt-4 justify-between rounded-full border-primary text-primary hover:bg-primary/5">
+                        View Resources <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })()}
     </div>
   );
 };
