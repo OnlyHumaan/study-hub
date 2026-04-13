@@ -146,8 +146,14 @@ const CourseListPage = () => {
                       const Icon = courseIconMap[course.title] || BookOpen;
                       return (
                         <div key={course.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
-                          <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                            <Icon className="h-16 w-16 text-primary/40" />
+                          <div className="h-32 overflow-hidden flex items-center justify-center">
+                            {course.thumbnail ? (
+                              <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" loading="lazy" />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                                <Icon className="h-16 w-16 text-primary/40" />
+                              </div>
+                            )}
                           </div>
                           <div className="p-6 flex flex-col flex-1">
                             <div className="flex items-start justify-between mb-3">
@@ -180,8 +186,14 @@ const CourseListPage = () => {
               const Icon = courseIconMap[course.title] || BookOpen;
               return (
                 <div key={course.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
-                  <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                    <Icon className="h-16 w-16 text-primary/40" />
+                  <div className="h-32 overflow-hidden flex items-center justify-center">
+                    {course.thumbnail ? (
+                      <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                        <Icon className="h-16 w-16 text-primary/40" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-start justify-between mb-3">

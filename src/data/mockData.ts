@@ -1,3 +1,12 @@
+import courseAccountingPrinciples from "@/assets/course-accounting-principles.jpg";
+import courseBusinessMath from "@/assets/course-business-math.jpg";
+import courseCostAccounting from "@/assets/course-cost-accounting.jpg";
+import courseManagementAccounting from "@/assets/course-management-accounting.jpg";
+import courseAuditing from "@/assets/course-auditing.jpg";
+import courseFinancialReporting from "@/assets/course-financial-reporting.jpg";
+import courseTaxation from "@/assets/course-taxation.jpg";
+import courseAdvancedAuditing from "@/assets/course-advanced-auditing.jpg";
+
 export interface Department {
   id: string;
   name: string;
@@ -15,6 +24,7 @@ export interface Course {
   level: "Undergraduate" | "Masters" | "Doctoral" | "Core Curriculum";
   academicLevel?: "100 Level" | "200 Level" | "300 Level" | "400 Level";
   resourceCount: number;
+  thumbnail?: string;
 }
 
 export interface Resource {
@@ -51,16 +61,16 @@ export const departments: Department[] = [
 
 export const courses: Course[] = [
   // Accounting — 100 Level
-  { id: "acc101", code: "ACC-101", title: "Principles of Accounting", description: "Fundamentals of financial accounting including journals, ledgers, and trial balance.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 4 },
-  { id: "acc102", code: "ACC-102", title: "Business Mathematics", description: "Quantitative methods and mathematical applications in accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 3 },
+  { id: "acc101", code: "ACC-101", title: "Principles of Accounting", description: "Fundamentals of financial accounting including journals, ledgers, and trial balance.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 4, thumbnail: courseAccountingPrinciples },
+  { id: "acc102", code: "ACC-102", title: "Business Mathematics", description: "Quantitative methods and mathematical applications in accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "100 Level", resourceCount: 3, thumbnail: courseBusinessMath },
   // Accounting — 200 Level
-  { id: "acc201", code: "ACC-201", title: "Cost Accounting", description: "Cost classification, job costing, process costing, and budgeting techniques.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
-  { id: "acc202", code: "ACC-202", title: "Management Accounting", description: "Budgeting, variance analysis, and performance measurement.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
-  { id: "acc203", code: "ACC-203", title: "Auditing & Assurance", description: "Principles and practices of external auditing, internal controls, and professional ethics.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3 },
+  { id: "acc201", code: "ACC-201", title: "Cost Accounting", description: "Cost classification, job costing, process costing, and budgeting techniques.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3, thumbnail: courseCostAccounting },
+  { id: "acc202", code: "ACC-202", title: "Management Accounting", description: "Budgeting, variance analysis, and performance measurement.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3, thumbnail: courseManagementAccounting },
+  { id: "acc203", code: "ACC-203", title: "Auditing & Assurance", description: "Principles and practices of external auditing, internal controls, and professional ethics.", departmentId: "accounting", level: "Undergraduate", academicLevel: "200 Level", resourceCount: 3, thumbnail: courseAuditing },
   // Accounting — 300 Level
-  { id: "acc301", code: "ACC-301", title: "Financial Reporting & IFRS", description: "International financial reporting standards and financial statement preparation.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
-  { id: "acc302", code: "ACC-302", title: "Taxation", description: "Nigerian tax legislation, personal and corporate tax computation, and tax planning.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
-  { id: "acc303", code: "ACC-303", title: "Advanced Auditing", description: "Advanced external and internal audit practices and forensic accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3 },
+  { id: "acc301", code: "ACC-301", title: "Financial Reporting & IFRS", description: "International financial reporting standards and financial statement preparation.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3, thumbnail: courseFinancialReporting },
+  { id: "acc302", code: "ACC-302", title: "Taxation", description: "Nigerian tax legislation, personal and corporate tax computation, and tax planning.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3, thumbnail: courseTaxation },
+  { id: "acc303", code: "ACC-303", title: "Advanced Auditing", description: "Advanced external and internal audit practices and forensic accounting.", departmentId: "accounting", level: "Undergraduate", academicLevel: "300 Level", resourceCount: 3, thumbnail: courseAdvancedAuditing },
 
   // BioChemistry
   { id: "bch101", code: "BCH-101", title: "General Biochemistry", description: "Introduction to the chemistry of biomolecules, enzymes, and metabolic pathways.", departmentId: "biochemistry", level: "Undergraduate", resourceCount: 3 },
