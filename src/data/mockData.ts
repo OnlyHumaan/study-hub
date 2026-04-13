@@ -7,6 +7,7 @@ import courseFinancialReporting from "@/assets/course-financial-reporting.jpg";
 import courseTaxation from "@/assets/course-taxation.jpg";
 import courseAdvancedAuditing from "@/assets/course-advanced-auditing.jpg";
 
+export interface Department {
   id: string;
   name: string;
   faculty: string;
