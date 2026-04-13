@@ -15,6 +15,7 @@ export interface Course {
   level: "Undergraduate" | "Masters" | "Doctoral" | "Core Curriculum";
   academicLevel?: "100 Level" | "200 Level" | "300 Level" | "400 Level";
   resourceCount: number;
+  thumbnail?: string;
 }
 
 export interface Resource {
